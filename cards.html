@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Marianumopoly – Karten</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Zusätzliche Formatierung nur für diese Seite */
+    body {
+      background: white;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .card-section {
+      max-width: 900px;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 1rem;
+    }
+
+    .print-card {
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 1rem;
+      background: #fff;
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-type {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0.4rem 0;
+    }
+
+    .card-text {
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-effect {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    .back-link {
+      text-align: center;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Marianumopoly – Druckbare Karten</h1>
+
+  <div class="back-link">
+    <a href="index.html">← zurück zum Spielbrett</a>
+  </div>
+
+  <div class="card-section">
+    <h2>Ereignis-Karten</h2>
+    <div class="card-grid" id="eventCards"></div>
+  </div>
+
+  <div class="card-section">
+    <h2>Dolinar-Karten</h2>
+    <div class="card-grid" id="dolinarCards"></div>
+  </div>
+
+  <!-- Karten-Daten laden -->
+  <script src="cards.js"></script>
+
+  <script>
+    // Karten aus cards.js laden
+    const eventCards = window.MarianumCards.eventCards;
+    const dolinarCards = window.MarianumCards.dolinarCards;
+
+    // Container
+    const eventContainer = document.getElementById("eventCards");
+    const dolinarContainer = document.getElementById("dolinarCards");
+
+    // Funktion: Karte generieren
+    function createCard(card) {
+      const div = document.createElement("div");
+      div.className = "print-card";
+      div.innerHTML = `
+        <div class="card-type">${card.type}</div>
+        <div class="card-title">${card.title}</div>
+        <div class="card-text">${card.text}</div>
+        <div class="card-effect">${card.effect}</div>
+      `;
+      return div;
+    }
+
+    // Ereignis-Karten einfügen
+    eventCards.forEach(card => {
+      eventContainer.appendChild(createCard(card));
+    });
+
+    // Dolinar-Karten einfügen
+    dolinarCards.forEach(card => {
+      dolinarContainer.appendChild(createCard(card));
+    });
+  </script>
+
+</body>
+</html>
