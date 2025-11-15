@@ -26,7 +26,7 @@
     }
 
     .card-section {
-      max-width: 900px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 1rem;
     }
@@ -34,7 +34,7 @@
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
+      gap: 20px;
     }
 
     .print-card {
@@ -42,7 +42,7 @@
       border-radius: 12px;
       padding: 1rem;
       background: #fff;
-      height: 220px;
+      height: 240px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -62,7 +62,7 @@
 
     .card-text {
       font-size: 0.9rem;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
     }
 
     .card-effect {
@@ -80,4 +80,40 @@
     <a href="index.html">← zurück zum Spielbrett</a>
   </div>
 
+  <!-- Ereignis-Karten -->
   <div class="card-section">
+    <h2>Ereignis-Karten</h2>
+    <div class="card-grid" id="eventCards"></div>
+  </div>
+
+  <!-- Dolinar-Karten -->
+  <div class="card-section">
+    <h2>Dolinar-Karten</h2>
+    <div class="card-grid" id="dolinarCards"></div>
+  </div>
+
+  <script>
+    // ---------------------------
+    // 1. Ereignis-Karten
+    // ---------------------------
+    const eventCards = [
+      {
+        type: "Ereignis",
+        title: "Busfahrt zum Skikurs",
+        text: "Im Bus reden Till und Georg über Spiele und Lehrer – draußen zieht die Landschaft vorbei.",
+        effect: "Rücke 3 Felder vor und erhalte 50 €."
+      },
+      {
+        type: "Ereignis",
+        title: "Chaos am Buffet",
+        text: "Die Schlange ist lang, Stimmen überlagern sich, Tabletts klappern.",
+        effect: "Bezahle 20 € an die Bank."
+      },
+      {
+        type: "Ereignis",
+        title: "Sportfest",
+        text: "Auf dem Großen Platz ist alles aufgebaut, Schüler und Lehrer vermischen sich.",
+        effect: "Alle zahlen 30 € in die Mitte. Du erhältst 50 € Bonus, wenn du ein Sportfeld besitzt."
+      },
+      {
+        type:
