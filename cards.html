@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Marianumopoly – Druckbare Karten</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=1.0">
 
   <style>
     body {
@@ -18,8 +18,8 @@
     }
 
     h2 {
-      margin-top: 2rem;
       text-align: center;
+      margin-top: 2rem;
     }
 
     .back-link {
@@ -59,7 +59,6 @@
     .card-title {
       font-size: 1.1rem;
       font-weight: 600;
-      margin: 0.3rem 0;
     }
 
     .card-text {
@@ -81,21 +80,21 @@
     <a href="index.html">← zurück zum Spielbrett</a>
   </div>
 
-  <!-- Abschnitt Ereignis -->
+  <!-- Ereignis-Karten -->
   <div class="card-section">
     <h2>Ereignis-Karten</h2>
     <div class="card-grid" id="eventCards"></div>
   </div>
 
-  <!-- Abschnitt Dolinar -->
+  <!-- Dolinar-Karten -->
   <div class="card-section">
     <h2>Dolinar-Karten</h2>
     <div class="card-grid" id="dolinarCards"></div>
   </div>
 
-  <!-- Karten-Daten laden -->
-  <script src="cards.js"></script>
-  <script src="script.js"></script>
+  <!-- Skripte mit Cache-Breaker -->
+  <script src="cards.js?v=1.0"></script>
+  <script src="script.js?v=1.0"></script>
 
   <script>
     // Karten aus cards.js holen
@@ -118,14 +117,10 @@
     }
 
     // Ereignis-Karten einfügen
-    eventCards.forEach(card => {
-      eventContainer.appendChild(createCard(card));
-    });
+    eventCards.forEach(card => eventContainer.appendChild(createCard(card)));
 
     // Dolinar-Karten einfügen
-    dolinarCards.forEach(card => {
-      dolinarContainer.appendChild(createCard(card));
-    });
+    dolinarCards.forEach(card => dolinarContainer.appendChild(createCard(card)));
   </script>
 
 </body>
