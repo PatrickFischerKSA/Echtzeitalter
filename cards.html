@@ -2,31 +2,41 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Marianumopoly – Karten</title>
+  <title>Marianumopoly – Druckbare Karten</title>
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* Zusätzliche Formatierung nur für diese Seite */
     body {
       background: white;
+      margin: 0;
+      font-family: system-ui, sans-serif;
     }
 
     h1 {
       text-align: center;
-      margin-top: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .back-link {
+      text-align: center;
+      margin: 1rem 0;
     }
 
     .card-section {
       max-width: 900px;
-      margin: 1.5rem auto;
-      padding: 0 1rem;
+      margin: 0 auto;
+      padding: 1rem;
     }
 
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 16px;
-      margin-top: 1rem;
     }
 
     .print-card {
@@ -41,50 +51,43 @@
     }
 
     .card-type {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 0.8rem;
       opacity: 0.7;
+      text-transform: uppercase;
     }
 
     .card-title {
       font-size: 1.1rem;
       font-weight: 600;
-      margin: 0.4rem 0;
+      margin: 0.3rem 0;
     }
 
     .card-text {
-      font-size: 0.85rem;
-      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
     }
 
     .card-effect {
-      font-size: 0.8rem;
-      opacity: 0.85;
-    }
-
-    .back-link {
-      text-align: center;
-      margin: 1rem 0;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      opacity: 0.9;
     }
   </style>
 </head>
 
 <body>
+
   <h1>Marianumopoly – Druckbare Karten</h1>
 
   <div class="back-link">
     <a href="index.html">← zurück zum Spielbrett</a>
   </div>
 
-  <!-- Ereignis-Karten -->
+  <!-- Abschnitt Ereignis -->
   <div class="card-section">
     <h2>Ereignis-Karten</h2>
     <div class="card-grid" id="eventCards"></div>
   </div>
 
-  <!-- Dolinar-Karten -->
+  <!-- Abschnitt Dolinar -->
   <div class="card-section">
     <h2>Dolinar-Karten</h2>
     <div class="card-grid" id="dolinarCards"></div>
@@ -95,15 +98,13 @@
   <script src="script.js"></script>
 
   <script>
-    // Karten aus cards.js laden
+    // Karten aus cards.js holen
     const eventCards = window.MarianumCards.eventCards;
     const dolinarCards = window.MarianumCards.dolinarCards;
 
-    // Container
     const eventContainer = document.getElementById("eventCards");
     const dolinarContainer = document.getElementById("dolinarCards");
 
-    // Funktion: Karte generieren
     function createCard(card) {
       const div = document.createElement("div");
       div.className = "print-card";
