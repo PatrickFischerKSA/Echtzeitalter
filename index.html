@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Marianumopoly – Echtzeitalter (interaktiv)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Marianumopoly – Echtzeitalter</h1>
+    <p style="text-align:center;font-size:0.9rem;">
+      Ein Monopoly-inspiriertes Spiel mit Schauplätzen und Figuren aus dem Marianum in <em>Echtzeitalter</em>.
+    </p>
+    <p class="hint">
+      ➤ Tipp: Auf <strong>Ereignis</strong>- und <strong>Dolinar</strong>-Felder klicken, um eine Karte zu ziehen. <br>
+      ➤ Maus über Felder halten, um szenische Infos einzublenden. <br>
+      ➤ <a href="cards.html">Hier geht es zu den druckbaren Karten</a>.
+    </p>
+
+    <div class="board-container">
+      <div class="board">
+        <!-- OBERSTE REIHE (von links nach rechts) -->
+        <div class="space corner" data-info="Erster Schultag im Marianum: Till taucht in das abgeschlossene System ein, alles wirkt groß und einschüchternd.">
+          <div class="space-inner">
+            <div>START</div>
+            <div>Erster Schultag<br>im Marianum</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Waldplatz: Zwischen Natur und Schulgrenzen, Gefühl von Randlage und gleichzeitig Rückzugsort für die Schüler.">
+          <div class="space-inner">
+            <div class="color-bar brown"></div>
+            <div class="label">Waldplatz</div>
+            <div class="price">60 €</div>
+          </div>
+        </div>
+
+        <div class="space special clickable event-field" data-info="Unvorhergesehene Wendungen: Proben, Feste, Ansagen der Direktion – der Alltag im Marianum kippt schnell.">
+          <div class="space-inner">
+            <div class="label">Ereignis</div>
+            <div class="price">Zieh 1 Karte</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Grotte hinter dem Hügel: halb verborgener Ort, an dem sich die Welt der Schüler von der offiziellen Schulfront löst.">
+          <div class="space-inner">
+            <div class="color-bar brown"></div>
+            <div class="label">Grotte hinter dem Hügel</div>
+            <div class="price">60 €</div>
+          </div>
+        </div>
+
+        <div class="space special" data-info="Buskarte: Fahrten zum Skikurs, zur Stadt, zur Außenwelt – Übergang zwischen Marianum-Blase und Wien.">
+          <div class="space-inner">
+            <div class="label">Marianum-Buskarte</div>
+            <div class="price">200 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Firsty-Platz: Hier wird klar, wer ganz oben steht – Macht über Pausen, Bälle und Regeln.">
+          <div class="space-inner">
+            <div class="color-bar light-blue"></div>
+            <div class="label">Firsty-Platz</div>
+            <div class="price">100 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Hartplatz: Schauplatz für Fußball und Machtspiele, wo körperliche Überlegenheit offen ausgestellt wird.">
+          <div class="space-inner">
+            <div class="color-bar light-blue"></div>
+            <div class="label">Hartplatz</div>
+            <div class="price">100 €</div>
+          </div>
+        </div>
+
+        <div class="space special clickable dolinar-field" data-info="Dolinar: seine Eingriffe, Strafarbeiten und Kommentare prägen den Alltag der Klasse 1B.">
+          <div class="space-inner">
+            <div class="label">Dolinar-Karte</div>
+            <div class="price">Strafe / Bonus</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Funcourts: offiziell Sport, inoffiziell Bühne für Status, Ausgrenzung und heimliche Allianzen.">
+          <div class="space-inner">
+            <div class="color-bar light-blue"></div>
+            <div class="label">Funcourts</div>
+            <div class="price">120 €</div>
+          </div>
+        </div>
+
+        <div class="space special" data-info="Buffet: Semmeln, Getränke, kurze Gespräche – hier verdichtet sich die soziale Hierarchie in der Schlange.">
+          <div class="space-inner">
+            <div class="label">Buffet (Wasserwerk)</div>
+            <div class="price">150 €</div>
+          </div>
+        </div>
+
+        <div class="space corner" data-info="Nachsitzen: Bei Dolinar bedeutet das nicht nur Strafe, sondern Demütigung und Kontrolle über Sprache und Verhalten.">
+          <div class="space-inner">
+            <div>Nur zu Besuch</div>
+            <div>Nachsitzen beim Dolinar</div>
+          </div>
+        </div>
+
+        <!-- RECHTE SEITE (von oben nach unten, ohne Ecken) -->
+        <div class="space" data-info="Hallenbad: Ort von Scham und Körperbewusstsein, die Blicke der anderen werden kaum erträglich.">
+          <div class="space-inner">
+            <div class="color-bar pink"></div>
+            <div class="label">Hallenbad</div>
+            <div class="price">140 €</div>
+          </div>
+        </div>
+
+        <div class="space special clickable event-field" data-info="Kleinere und größere Störungen im Schulbetrieb: vom spontanen Gespräch bis zur offiziellen Bekanntmachung.">
+          <div class="space-inner">
+            <div class="label">Ereignis</div>
+            <div class="price">Zieh 1 Karte</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Parkettturnsaal: glänzende Oberfläche, unter der Konkurrenz und Erwartungsdruck liegen.">
+          <div class="space-inner">
+            <div class="color-bar pink"></div>
+            <div class="label">Parkettturnsaal</div>
+            <div class="price">140 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Multifunktionshalle: Proben, Veranstaltungen, Auftritte – hier wird das Marianum vorgeführt, nach innen und außen.">
+          <div class="space-inner">
+            <div class="color-bar pink"></div>
+            <div class="label">Multifunktionshalle</div>
+            <div class="price">160 €</div>
+          </div>
+        </div>
+
+        <div class="space special" data-info="Heizungsraum/E-Werk: technischer Hintergrund des Schlosses, unglamourös und doch lebensnotwendig – wie unsichtbare Arbeit an der Ordnung.">
+          <div class="space-inner">
+            <div class="label">Heizungsraum (E-Werk)</div>
+            <div class="price">150 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Konferenzzimmer-Flur: Raum der Erwachsenenentscheidungen, wo über Schüler gesprochen wird, ohne sie.">
+          <div class="space-inner">
+            <div class="color-bar orange"></div>
+            <div class="label">Konferenzzimmer-Flur</div>
+            <div class="price">180 €</div>
+          </div>
+        </div>
+
+        <div class="space special" data-info="Marianum-Shuttle: Bewegungen zwischen Schloss, Stadt und anderen Welten – der Radius der Figuren erweitert sich.">
+          <div class="space-inner">
+            <div class="label">Marianum-Shuttle</div>
+            <div class="price">200 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Buffet-Schlange: man steht an, wird gesehen – wer vorne steht, hat mehr als nur Essen.">
+          <div class="space-inner">
+            <div class="color-bar orange"></div>
+            <div class="label">Buffet-Schlange</div>
+            <div class="price">180 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Krankenstation: offizieller Schonraum, der gleichzeitig als Rückzugsort aus dem Leistungsdruck fungiert.">
+          <div class="space-inner">
+            <div class="color-bar orange"></div>
+            <div class="label">Krankenstation</div>
+            <div class="price">200 €</div>
+          </div>
+        </div>
+
+        <!-- UNTERE REIHE (von rechts nach links) -->
+        <div class="space corner" data-info="Wenn Dolinar eingreift, geht es selten nur um Regeln, sondern um Würde, Scham und Unterordnung.">
+          <div class="space-inner">
+            <div>Dolinar erwischt dich</div>
+            <div>Direkt ins Nachsitzen!</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Großer Platz: zentraler Außenraum des Marianums, oft Bühne für kollektive Erlebnisse und Beobachtungen.">
+          <div class="space-inner">
+            <div class="color-bar red"></div>
+            <div class="label">Großer Platz</div>
+            <div class="price">220 €</div>
+          </div>
+        </div>
+
+        <div class="space special clickable event-field" data-info="Ungeplante Wendung im Schul- oder Familienalltag: kleine und große Brüche in der Routine.">
+          <div class="space-inner">
+            <div class="label">Ereignis</div>
+            <div class="price">Zieh 1 Karte</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Waldweg zur Mauer: Grenze zwischen innen und außen, der Blick auf die Mauer verschiebt Tills Wahrnehmung der Freiheit.">
+          <div class="space-inner">
+            <div class="color-bar red"></div>
+            <div class="label">Waldweg zur Mauer</div>
+            <div class="price">220 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Theater Akzent: Aufführungsort, an dem sich Schulwelt und Stadt berühren, und die Rollen der Schüler sich verschieben.">
+          <div class="space-inner">
+            <div class="color-bar red"></div>
+            <div class="label">Theater Akzent</div>
+            <div class="price">240 €</div>
+          </div>
+        </div>
+
+        <div class="space special" data-info="Buskarte: erlaubt Übergänge – zum Skikurs, in die Stadt, zur Familie – und unterbricht die Marianum-Routine.">
+          <div class="space-inner">
+            <div class="label">Marianum-Buskarte</div>
+            <div class="price">200 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Diplomatische Akademie: Nachbarschaft der Macht, die zeigt, wie sehr das Marianum in größere Strukturen eingebettet ist.">
+          <div class="space-inner">
+            <div class="color-bar yellow"></div>
+            <div class="label">Diplomatische Akademie<br>(Zigarrensalon)</div>
+            <div class="price">260 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Nuntiatur: kirchliche Präsenz in Sichtweite, Symbol für Tradition, Autorität und enge Verflechtung von Religion und Bildung.">
+          <div class="space-inner">
+            <div class="color-bar yellow"></div>
+            <div class="label">Nuntiatur</div>
+            <div class="price">260 €</div>
+          </div>
+        </div>
+
+        <div class="space special clickable dolinar-field" data-info="Dolinar greift immer wieder in Sprache, Texte und Verhalten ein – seine Logik formt den Schulalltag.">
+          <div class="space-inner">
+            <div class="label">Dolinar-Karte</div>
+            <div class="price">Strafe / Bonus</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Blick von der Karlskirche: die Stadt erscheint groß, aber geordnet – Kontrast zum engen System Marianum.">
+          <div class="space-inner">
+            <div class="color-bar yellow"></div>
+            <div class="label">Blick von der Karlskirche</div>
+            <div class="price">280 €</div>
+          </div>
+        </div>
+
+        <div class="space corner" data-info="Mit Prof. Betsch wirkt Sport harmlos, fast verspielt – ‘Gänseblümchen pflücken’ statt Leistung um jeden Preis.">
+          <div class="space-inner">
+            <div>Gänseblümchen pflücken</div>
+            <div>bei Prof. Betsch</div>
+          </div>
+        </div>
+
+        <!-- LINKE SEITE (von unten nach oben, ohne Ecken) -->
+        <div class="space" data-info="Dolinar-Klasse 1B: Zentrum des Romans – hier verdichten sich Macht, Demütigung, Widerstand und leise Solidaritäten.">
+          <div class="space-inner">
+            <div class="color-bar green"></div>
+            <div class="label">Dolinar-Klasse 1B</div>
+            <div class="price">300 €</div>
+          </div>
+        </div>
+
+        <div class="space special clickable event-field" data-info="Manchmal verschiebt sich etwas im Kleinen: ein Gespräch, ein Blick, eine Andeutung – und alles fühlt sich anders an.">
+          <div class="space-inner">
+            <div class="label">Ereignis</div>
+            <div class="price">Zieh 1 Karte</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Informatiksaal bei Gruber: Raum für Mathe, Computer, Spiele – und leise, fast unspektakuläre Verbündeten-Momente.">
+          <div class="space-inner">
+            <div class="color-bar green"></div>
+            <div class="label">Informatiksaal bei Gruber</div>
+            <div class="price">300 €</div>
+          </div>
+        </div>
+
+        <div class="space special" data-info="Shuttle-Fahrten können kurze Atempausen sein – zwischen Elternhaus, Schloss und anderen Verpflichtungen.">
+          <div class="space-inner">
+            <div class="label">Marianum-Shuttle</div>
+            <div class="price">200 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Bibliothek Marianum: ein ruhiger Raum, in dem Lesen und Denken eine Gegenwelt zur Kontrolle im Klassenzimmer bilden.">
+          <div class="space-inner">
+            <div class="color-bar green"></div>
+            <div class="label">Bibliothek Marianum</div>
+            <div class="price">320 €</div>
+          </div>
+        </div>
+
+        <div class="space special" data-info="E-Werk: die unsichtbare Infrastruktur – wie viele Strukturen im Roman, die im Hintergrund wirken, aber alles bestimmen.">
+          <div class="space-inner">
+            <div class="label">Heizungsraum (E-Werk)</div>
+            <div class="price">150 €</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Schlossvorderseite: repräsentative Fassade, die das Marianum nach außen zeigt – geordnet, kultiviert, makellos.">
+          <div class="space-inner">
+            <div class="color-bar dark-blue"></div>
+            <div class="label">Schlossvorderseite</div>
+            <div class="price">350 €</div>
+          </div>
+        </div>
+
+        <div class="space special clickable dolinar-field" data-info="Wenn Dolinar eingreift, kann eine Kleinigkeit zu einer großen, existenziellen Szene werden.">
+          <div class="space-inner">
+            <div class="label">Dolinar-Karte</div>
+            <div class="price">Strafe / Bonus</div>
+          </div>
+        </div>
+
+        <div class="space" data-info="Schlossrückseite: abblätternde Pracht, verborgene Winkel – das Marianum wirkt hier weniger feierlich, dafür ehrlicher.">
+          <div class="space-inner">
+            <div class="color-bar dark-blue"></div>
+            <div class="label">Schlossrückseite</div>
+            <div class="price">400 €</div>
+          </div>
+        </div>
+
+        <!-- ZENTRUM -->
+        <div class="center">
+          <div class="center-inner">
+            <h2>Marianumopoly</h2>
+            <p><strong>Schauplätze &amp; Figuren aus <em>Echtzeitalter</em></strong></p>
+            <p>Spielt um Kontrolle über Klassenzimmer, Plätze und geheime Wege des Marianums.</p>
+            <p style="margin-top:0.5rem;font-size:0.8rem;">
+              Aus urheberrechtlichen Gründen sind Zitate hier sinngemäß und stark verkürzt.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UNTERER TEIL: ERKLÄRUNG & KARTENBESCHREIBUNG -->
+    <section>
+      <h2>Farbfamilien und Bedeutung (Vorschlag)</h2>
+      <table>
+        <tr>
+          <th>Farbe</th>
+          <th>Felder</th>
+          <th>Funktion im Roman-Kontext</th>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:#8b4513;color:#fff;">Braun</span></td>
+          <td>Waldplatz, Grotte hinter dem Hügel</td>
+          <td>Abgelegene Orte, Rückzugsorte, Grenze zur Außenwelt und zur Mauer.</td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:#87ceeb;">Hellblau</span></td>
+          <td>Firsty-Platz, Hartplatz, Funcourts</td>
+          <td>Hierarchien, Firsty-System, Sport als Bühne für Machtverhältnisse.</td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:#ffc0cb;">Pink</span></td>
+          <td>Hallenbad, Parkettturnsaal, Multifunktionshalle</td>
+          <td>Offizielle, repräsentative Räume, in denen die Schule sich zeigt.</td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:#ffa500;">Orange</span></td>
+          <td>Konferenzzimmer-Flur, Buffet-Schlange, Krankenstation</td>
+          <td>Verwaltungs- und Übergangszonen, wo Kontrolle und Körper aufeinandertreffen.</td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:#ff5a5a;">Rot</span></td>
+          <td>Großer Platz, Waldweg zur Mauer, Theater Akzent</td>
+          <td>Zentrale Schauplätze zwischen Sichtbarkeit (Platz) und Fluchtlinien (Mauer, Theater).</td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:#ffd700;">Gelb</span></td>
+          <td>Diplomatische Akademie, Nuntiatur, Karlskirche-Blick</td>
+          <td>Außenkontakte, Stadt, Macht und symbolische Nachbarschaft des Marianums.</td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:#228b22;color:#fff;">Grün</span></td>
+          <td>Dolinar-Klasse 1B, Informatiksaal, Bibliothek</td>
+          <td>Kernräume der Sozialisation: Kontrolle (Dolinar), Nische (Gruber), Wissen (Bibliothek).</td>
+        </tr>
+        <tr>
+          <td><span class="tag" style="background:#00008b;color:#fff;">Dunkelblau</span></td>
+          <td>Schlossvorderseite, Schlossrückseite</td>
+          <td>Symbol des Marianums: Repräsentation vs. bröckelnde Rückseite.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Interaktive Ereignis- und Dolinar-Karten im Spiel</h2>
+      <p style="font-size:0.85rem;">
+        Beim Klick auf ein <strong>Ereignis</strong>- oder <strong>Dolinar</strong>-Feld erscheint eine zufällige Karte.
+        Die Texte sind an Szenen und Motive des Romans angelehnt, ohne originäre Sätze wörtlich zu zitieren.
+      </p>
+    </section>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="cardModal">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="modal-type" id="modalType"></div>
+      <h3 id="modalTitle"></h3>
+      <p class="modal-body" id="modalText"></p>
+      <p class="modal-effect" id="modalEffect"></p>
+      <div class="modal-footer">
+        <button id="modalOk">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
