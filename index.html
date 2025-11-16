@@ -1,32 +1,44 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Marianumopoly – Spielfeld</title>
+  <meta charset="UTF-8">
+  <title>Marianumopoly – Spielbrett</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
-</head>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      margin: 2rem;
+      background: #f0f0f0;
+      color: #222;
+    }
 
-<body>
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
 
-    <h1>Marianumopoly – Das Spiel</h1>
+    nav {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
 
-    <nav style="text-align:center; margin-bottom:2rem;">
-        <a href="cards2.html" style="font-size:1.2rem; text-decoration:none; color:#5a2ca0;">
-            🎴 Zu den Karten
-        </a>
-    </nav>
+    nav a {
+      background: #5a2ca0;
+      color: white;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
 
-    <div class="board-container" style="text-align:center; margin-top:2rem;">
-        <p style="font-size:1.1rem; opacity:0.75;">
-            (Hier kommt später das komplette Spielfeld hin)
-        </p>
-    </div>
+    nav a:hover {
+      background: #7c42d0;
+    }
 
-    <footer style="text-align:center; margin-top:4rem; opacity:0.6;">
-        <p>© 2025 – Marianumopoly</p>
-    </footer>
-
-</body>
-</html>
+    /* Spielfeld-Hinweisbox */
+    .board-placeholder {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius
