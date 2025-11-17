@@ -38,19 +38,106 @@
       background: #7c42d0;
     }
 
-    /* --- BOARD-GRID ------------------------------------------------------- */
+    /* --- GAME UI (HUD) -------------------------------------------------- */
+
+    #game-ui {
+      max-width: 900px;
+      margin: 2rem auto 1rem;
+      padding: 1rem 1.5rem;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      font-size: 0.9rem;
+    }
+
+    #game-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    #game-controls button {
+      background: #5a2ca0;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    #game-controls button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    #game-controls button:hover:enabled {
+      background: #7c42d0;
+    }
+
+    #game-current {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    #game-players {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .player-card {
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      background: #f4f4ff;
+      border: 1px solid #d6d6ff;
+      min-width: 140px;
+    }
+
+    .player-card.active {
+      border-color: #5a2ca0;
+      box-shadow: 0 0 0 2px rgba(90,44,160,0.25);
+    }
+
+    .player-name {
+      font-weight: 600;
+    }
+
+    .player-money,
+    .player-pos,
+    .player-status {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    #game-log {
+      max-height: 220px;
+      overflow-y: auto;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 0.8rem;
+    }
+
+    .log-entry {
+      margin-bottom: 0.35rem;
+    }
+
+    /* --- BOARD-GRID ------------------------------------------------------ */
 
     .board {
       width: 90vw;
       max-width: 900px;
-      margin: 3rem auto;
+      margin: 2rem auto 3rem;
       display: grid;
       grid-template-columns: repeat(11, minmax(55px, 1fr));
       grid-template-rows: repeat(11, minmax(55px, 1fr));
       gap: 4px;
     }
 
-    /* Mitte des Spielfeldes */
     .board-center {
       grid-row: 2 / 11;
       grid-column: 2 / 11;
@@ -66,9 +153,9 @@
       font-size: 1.6rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      padding: 1rem;
+      box-sizing: border-box;
     }
-
-    /* --- FELDER ----------------------------------------------------------- */
 
     .field {
       background: #fff;
@@ -126,12 +213,12 @@
 
     footer {
       text-align: center;
-      margin: 2rem 0 3rem;
+      margin: 0 0 2rem;
       opacity: 0.7;
       font-size: 0.9rem;
     }
 
-    /* --- MODAL ------------------------------------------------------------ */
+    /* MODAL (Feldbeschreibung beim Klicken) ------------------------------- */
 
     .modal-backdrop {
       position: fixed;
@@ -208,214 +295,393 @@
     <a href="cards.html">🎴 Zu den Karten</a>
   </nav>
 
+  <!-- SPIEL-HUD / GAME UI -->
+  <div id="game-ui">
+    <div id="game-controls">
+      <button id="start-game-btn">Spiel starten</button>
+      <button id="roll-btn" disabled>Würfeln</button>
+    </div>
+
+    <div id="game-current">Klicke auf „Spiel starten“, um zu beginnen.</div>
+
+    <h2>Spielerübersicht</h2>
+    <div id="game-players"></div>
+
+    <h2>Spielverlauf</h2>
+    <div id="game-log"></div>
+  </div>
+
+  <!-- SPIELBRETT -->
   <div class="board">
 
-    <!-- MITTE -->
+    <!-- Mitte -->
     <div class="board-center">
       Marianumopoly
     </div>
 
-    <!-- UNTERE REIHE (Reihe 11) -->
-    <div class="field corner group-brown" style="grid-row:11;grid-column:1;"
-         data-title="Start" data-type="Ecke" data-text="Du beginnst eine neue Runde durchs Marianum.">START</div>
-
-    <div class="field group-brown" style="grid-row:11;grid-column:2;"
-         data-title="Eingangshof" data-type="Ort" data-text="Hier beginnt der Alltag im Marianum.">
-      <div class="field-label">Hof</div><div class="field-name">Eingangshof</div>
+    <!-- UNTERE REIHE (links → rechts), Reihe 11 -->
+    <div class="field corner group-brown"
+         style="grid-row: 11; grid-column: 1;"
+         data-title="Start"
+         data-type="Ecke"
+         data-text="Du beginnst eine neue Runde durchs Marianum.">
+      START
     </div>
 
-    <div class="field event" style="grid-row:11;grid-column:3;"
-         data-title="Verspätetes Shuttle" data-type="Ereignisfeld" data-text="Ziehe eine Ereignis-Karte.">
-      <div class="field-label">Ereignis</div><div class="field-name">Shuttle verspätet</div>
+    <div class="field group-brown"
+         style="grid-row: 11; grid-column: 2;"
+         data-title="Eingangshof"
+         data-type="Ort"
+         data-text="Hier beginnt der Alltag im Marianum – erste Blicke, erster Eindruck.">
+      <div class="field-label">Hof</div>
+      <div class="field-name">Eingangshof</div>
     </div>
 
-    <div class="field group-brown" style="grid-row:11;grid-column:4;"
-         data-title="Bussteig" data-type="Ort" data-text="Ein schmaler Raum zwischen Ankommen und Wegfahren.">
-      <div class="field-label">Ankunft</div><div class="field-name">Bussteig</div>
+    <div class="field event"
+         style="grid-row: 11; grid-column: 3;"
+         data-title="Verspätetes Shuttle"
+         data-type="Ereignisfeld"
+         data-text="Alle warten, niemand weiß warum. Ziehe eine Ereignis-Karte.">
+      <div class="field-label">Ereignis</div>
+      <div class="field-name">Shuttle verspätet</div>
     </div>
 
-    <div class="field special" style="grid-row:11;grid-column:5;"
-         data-title="Kaution" data-type="Kosten" data-text="Eine Unachtsamkeit – eine große Summe.">
-      <div class="field-label">Kosten</div><div class="field-name">Kaution</div>
+    <div class="field group-brown"
+         style="grid-row: 11; grid-column: 4;"
+         data-title="Bussteig"
+         data-type="Ort"
+         data-text="Zwischen Ankommen und Wegfahren entsteht ein schmaler Raum für Entscheidungen.">
+      <div class="field-label">Ankunft</div>
+      <div class="field-name">Bussteig</div>
     </div>
 
-    <div class="field station" style="grid-row:11;grid-column:6;"
-         data-title="Straßenbahn" data-type="Station" data-text="Sie verbindet das Marianum mit der Stadt.">
-      <div class="field-label">Station</div><div class="field-name">Straßenbahn</div>
+    <div class="field special"
+         style="grid-row: 11; grid-column: 5;"
+         data-title="Kaution"
+         data-type="Kosten"
+         data-text="Eine kleine Unachtsamkeit – eine große Summe. Zahle eine Runde.">
+      <div class="field-label">Kosten</div>
+      <div class="field-name">Kaution</div>
     </div>
 
-    <div class="field group-lightblue" style="grid-row:11;grid-column:7;"
-         data-title="Lehrerzimmer" data-type="Ort" data-text="Ein Raum voller Gespräche über Schüler.">
-      <div class="field-label">Lehrer</div><div class="field-name">Lehrerzimmer</div>
+    <div class="field station"
+         style="grid-row: 11; grid-column: 6;"
+         data-title="Straßenbahn"
+         data-type="Station"
+         data-text="Sie verbindet das Marianum mit der Stadt – und vieles dazwischen.">
+      <div class="field-label">Station</div>
+      <div class="field-name">Straßenbahn</div>
     </div>
 
-    <div class="field event" style="grid-row:11;grid-column:8;"
-         data-title="Improvisierte Stunde" data-type="Ereignisfeld" data-text="Ein Lehrer fehlt – ziehe eine Ereignis-Karte.">
-      <div class="field-label">Ereignis</div><div class="field-name">Impro-Stunde</div>
+    <div class="field group-lightblue"
+         style="grid-row: 11; grid-column: 7;"
+         data-title="Lehrerzimmer"
+         data-type="Ort"
+         data-text="Ein Raum, in dem viel über Schüler gesprochen wird – selten mit ihnen.">
+      <div class="field-label">Lehrer</div>
+      <div class="field-name">Lehrerzimmer</div>
     </div>
 
-    <div class="field group-lightblue" style="grid-row:11;grid-column:9;"
-         data-title="Nordflügel" data-type="Ort" data-text="Ein langer Gang mit hallenden Schritten.">
-      <div class="field-label">Gang</div><div class="field-name">Nordflügel</div>
+    <div class="field event"
+         style="grid-row: 11; grid-column: 8;"
+         data-title="Improvisierte Stunde"
+         data-type="Ereignisfeld"
+         data-text="Ein Lehrer fehlt, plötzlich entsteht Spielraum – oder neue Kontrolle. Ziehe eine Ereignis-Karte.">
+      <div class="field-label">Ereignis</div>
+      <div class="field-name">Impro-Stunde</div>
     </div>
 
-    <div class="field group-lightblue" style="grid-row:11;grid-column:10;"
-         data-title="Ostflügel" data-type="Ort" data-text="Manchmal sagt der Weg mehr als das Ziel.">
-      <div class="field-label">Gang</div><div class="field-name">Ostflügel</div>
+    <div class="field group-lightblue"
+         style="grid-row: 11; grid-column: 9;"
+         data-title="Gang Nordflügel"
+         data-type="Ort"
+         data-text="Ein langer Gang, in dem Schritte hallen – und Worte manchmal nach.">
+      <div class="field-label">Gang</div>
+      <div class="field-name">Nordflügel</div>
     </div>
 
-    <div class="field corner special" style="grid-row:11;grid-column:11;"
-         data-title="Nachsitzen" data-type="Ecke" data-text="Gehe direkt ins Nachsitzen.">NACH<br>SITZEN</div>
-
-    <!-- RECHTE SEITE (Spalte 11) -->
-    <div class="field dolinar" style="grid-row:10;grid-column:11;"
-         data-title="Dolinars Klassenzimmer" data-type="Dolinar-Feld" data-text="Ziehe eine Dolinar-Karte.">
-      <div class="field-label">Dolinar</div><div class="field-name">Klassenzimmer</div>
+    <div class="field group-lightblue"
+         style="grid-row: 11; grid-column: 10;"
+         data-title="Gang Ostflügel"
+         data-type="Ort"
+         data-text="Manchmal ist der Weg zwischen zwei Räumen die eigentliche Szene.">
+      <div class="field-label">Gang</div>
+      <div class="field-name">Ostflügel</div>
     </div>
 
-    <div class="field group-red" style="grid-row:9;grid-column:11;"
-         data-title="Der Blick" data-type="Szene" data-text="Ein Blick sagt manchmal mehr als Worte.">
-      <div class="field-label">Szene</div><div class="field-name">Der Blick</div>
+    <div class="field corner special"
+         style="grid-row: 11; grid-column: 11;"
+         data-title="Nachsitzen"
+         data-type="Ecke"
+         data-text="Du gehst direkt ins Nachsitzen – keine 200 € bei Start.">
+      NACH<br>SITZEN
     </div>
 
-    <div class="field group-red" style="grid-row:8;grid-column:11;"
-         data-title="Sportfest" data-type="Szene" data-text="Nicht alle sind freiwillig ehrgeizig.">
-      <div class="field-label">Szene</div><div class="field-name">Sportfest</div>
+    <!-- RECHTE SEITE (unten → oben), Spalte 11 -->
+    <div class="field dolinar"
+         style="grid-row: 10; grid-column: 11;"
+         data-title="Dolinars Klassenzimmer"
+         data-type="Dolinar-Feld"
+         data-text="Der Raum, in dem Worte zur Waffe werden können. Ziehe eine Dolinar-Karte.">
+      <div class="field-label">Dolinar</div>
+      <div class="field-name">Klassenzimmer</div>
     </div>
 
-    <div class="field station" style="grid-row:7;grid-column:11;"
-         data-title="Busparkplatz" data-type="Station" data-text="Startpunkt der Skikurs-Fahrt.">
-      <div class="field-label">Station</div><div class="field-name">Busparkplatz</div>
+    <div class="field group-red"
+         style="grid-row: 9; grid-column: 11;"
+         data-title="Der Blick im Gang"
+         data-type="Szene"
+         data-text="Der Blick im Gang sagt oft mehr als jede Bemerkung im Heft.">
+      <div class="field-label">Szene</div>
+      <div class="field-name">Der Blick</div>
     </div>
 
-    <div class="field group-yellow" style="grid-row:6;grid-column:11;"
-         data-title="Hallenbad" data-type="Ort" data-text="Geräusche und Blicke verstärken sich hier.">
-      <div class="field-label">Sport</div><div class="field-name">Hallenbad</div>
+    <div class="field group-red"
+         style="grid-row: 8; grid-column: 11;"
+         data-title="Sportfest"
+         data-type="Szene"
+         data-text="Auf dem großen Platz mischen sich Körper, Ehrgeiz und Blicke – nicht alle freiwillig.">
+      <div class="field-label">Szene</div>
+      <div class="field-name">Sportfest</div>
     </div>
 
-    <div class="field event" style="grid-row:5;grid-column:11;"
-         data-title="Busfahrt zum Skikurs" data-type="Ereignisfeld" data-text="Ziehe eine Ereignis-Karte.">
-      <div class="field-label">Ereignis</div><div class="field-name">Skibus</div>
+    <div class="field station"
+         style="grid-row: 7; grid-column: 11;"
+         data-title="Busparkplatz"
+         data-type="Station"
+         data-text="Hier startet die Busfahrt zum Skikurs – eine Reise über äußere und innere Grenzen.">
+      <div class="field-label">Station</div>
+      <div class="field-name">Busparkplatz</div>
     </div>
 
-    <div class="field group-yellow" style="grid-row:4;grid-column:11;"
-         data-title="Sporthalle" data-type="Ort" data-text="Eine Bühne für Körper – und Erwartungen.">
-      <div class="field-label">Sport</div><div class="field-name">Sporthalle</div>
+    <div class="field group-yellow"
+         style="grid-row: 6; grid-column: 11;"
+         data-title="Hallenbad"
+         data-type="Ort"
+         data-text="Der Raum verstärkt Geräusche – und Blicke. Niemand bleibt unsichtbar.">
+      <div class="field-label">Sport</div>
+      <div class="field-name">Hallenbad</div>
     </div>
 
-    <div class="field special" style="grid-row:3;grid-column:11;"
-         data-title="Internatsbeitrag" data-type="Kosten" data-text="Du musst zahlen.">
-      <div class="field-label">Kosten</div><div class="field-name">Internatsbeitrag</div>
+    <div class="field event"
+         style="grid-row: 5; grid-column: 11;"
+         data-title="Busfahrt zum Skikurs"
+         data-type="Ereignisfeld"
+         data-text="Till und Georg reden im Bus über Spiele, Lehrer und Macht. Ziehe eine Ereignis-Karte.">
+      <div class="field-label">Ereignis</div>
+      <div class="field-name">Skibus</div>
     </div>
 
-    <div class="field corner group-green" style="grid-row:2;grid-column:11;"
-         data-title="Frei-Hof" data-type="Ecke" data-text="Du atmest durch.">FREI-HOF</div>
-
-    <!-- OBERE REIHE (Reihe 1) -->
-    <div class="field group-darkblue" style="grid-row:1;grid-column:11;"
-         data-title="Bibliothek" data-type="Ort" data-text="Stille, Fokus, Gedanken.">
-      <div class="field-label">Ort</div><div class="field-name">Bibliothek</div>
+    <div class="field group-yellow"
+         style="grid-row: 4; grid-column: 11;"
+         data-title="Sporthalle"
+         data-type="Ort"
+         data-text="Zwischen Tribüne, Linien und Pfeifen entsteht ein eigener Rhythmus von Erfolg und Scham.">
+      <div class="field-label">Sport</div>
+      <div class="field-name">Sporthalle</div>
     </div>
 
-    <div class="field group-darkblue" style="grid-row:1;grid-column:10;"
-         data-title="Musikzimmer" data-type="Ort" data-text="Ein Raum voller Klang.">
-      <div class="field-label">Ort</div><div class="field-name">Musikzimmer</div>
+    <div class="field special"
+         style="grid-row: 3; grid-column: 11;"
+         data-title="Internatsbeitrag"
+         data-type="Kosten"
+         data-text="Du zahlst für Extras, die vielleicht gar nicht nach dir gefragt haben.">
+      <div class="field-label">Kosten</div>
+      <div class="field-name">Internatsbeitrag</div>
     </div>
 
-    <div class="field event" style="grid-row:1;grid-column:9;"
-         data-title="Stille" data-type="Ereignisfeld" data-text="Ziehe eine Ereignis-Karte.">
-      <div class="field-label">Ereignis</div><div class="field-name">Stille</div>
+    <div class="field corner group-green"
+         style="grid-row: 2; grid-column: 11;"
+         data-title="Frei-Hof"
+         data-type="Ecke"
+         data-text="Ein kurzer Schritt außerhalb des Systems – du atmest durch.">
+      FREI-HOF
     </div>
 
-    <div class="field group-green" style="grid-row:1;grid-column:8;"
-         data-title="Waldweg" data-type="Ort" data-text="Ein Weg der Gedanken.">
-      <div class="field-label">Weg</div><div class="field-name">Waldweg</div>
+    <!-- OBERE REIHE (rechts → links), Reihe 1 -->
+    <div class="field group-darkblue"
+         style="grid-row: 1; grid-column: 11;"
+         data-title="Bibliothek"
+         data-type="Ort"
+         data-text="Zwischen Regalen beruhigt sich dein Atem, die Welt wird leiser – und genauer.">
+      <div class="field-label">Ort</div>
+      <div class="field-name">Bibliothek</div>
     </div>
 
-    <div class="field group-green" style="grid-row:1;grid-column:7;"
-         data-title="Innenhof" data-type="Ort" data-text="Ein kleiner Kosmos zwischen Gebäuden.">
-      <div class="field-label">Hof</div><div class="field-name">Innenhof</div>
+    <div class="field group-darkblue"
+         style="grid-row: 1; grid-column: 10;"
+         data-title="Musikzimmer"
+         data-type="Ort"
+         data-text="Ein Raum voller Klang, in dem sich vieles anders anfühlt.">
+      <div class="field-label">Ort</div>
+      <div class="field-name">Musikzimmer</div>
     </div>
 
-    <div class="field station" style="grid-row:1;grid-column:6;"
-         data-title="Shuttle" data-type="Station" data-text="Übergang zwischen Internat und Stadt.">
-      <div class="field-label">Station</div><div class="field-name">Shuttle</div>
+    <div class="field event"
+         style="grid-row: 1; grid-column: 9;"
+         data-title="Stille in der Bibliothek"
+         data-type="Ereignisfeld"
+         data-text="Manchmal ist die Stille lauter als jede Bemerkung. Ziehe eine Ereignis-Karte.">
+      <div class="field-label">Ereignis</div>
+      <div class="field-name">Stille</div>
     </div>
 
-    <div class="field group-orange" style="grid-row:1;grid-column:5;"
-         data-title="Mensa" data-type="Ort" data-text="Geräusche, Stimmen, Begegnungen.">
-      <div class="field-label">Essen</div><div class="field-name">Mensa</div>
+    <div class="field group-green"
+         style="grid-row: 1; grid-column: 8;"
+         data-title="Waldweg zur Mauer"
+         data-type="Ort"
+         data-text="Der Weg zur Grenze – ein Ort für Gedanken, die im Internat keinen Platz haben.">
+      <div class="field-label">Weg</div>
+      <div class="field-name">Waldweg</div>
     </div>
 
-    <div class="field event" style="grid-row:1;grid-column:4;"
-         data-title="Buffet-Chaos" data-type="Ereignisfeld" data-text="Ziehe eine Ereignis-Karte.">
-      <div class="field-label">Ereignis</div><div class="field-name">Buffet-Chaos</div>
+    <div class="field group-green"
+         style="grid-row: 1; grid-column: 7;"
+         data-title="Innenhof"
+         data-type="Ort"
+         data-text="Zwischen den Gebäuden entsteht ein eigener Kosmos – Beobachtungen, Gespräche, Blicke.">
+      <div class="field-label">Hof</div>
+      <div class="field-name">Innenhof</div>
     </div>
 
-    <div class="field group-orange" style="grid-row:1;grid-column:3;"
-         data-title="Aula" data-type="Ort" data-text="Versammlungen und Auftritte.">
-      <div class="field-label">Aula</div><div class="field-name">Aula</div>
+    <div class="field station"
+         style="grid-row: 1; grid-column: 6;"
+         data-title="Shuttle-Haltestelle"
+         data-type="Station"
+         data-text="Das Shuttle verbindet Internat und Stadt. Ein Ort für Übergänge – und Ausweichmanöver.">
+      <div class="field-label">Station</div>
+      <div class="field-name">Shuttle</div>
     </div>
 
-    <div class="field group-orange" style="grid-row:1;grid-column:2;"
-         data-title="Schuleingang" data-type="Ort" data-text="Das Tor ins Marianum.">
-      <div class="field-label">Eingang</div><div class="field-name">Schule</div>
+    <div class="field group-orange"
+         style="grid-row: 1; grid-column: 5;"
+         data-title="Mensa"
+         data-type="Ort"
+         data-text="Tabletts, Stimmen, Gerüche. Hier mischen sich alle – und man ist doch nicht unsichtbar.">
+      <div class="field-label">Essen</div>
+      <div class="field-name">Mensa</div>
     </div>
 
-    <div class="field corner special" style="grid-row:1;grid-column:1;"
-         data-title="Nur zu Besuch" data-type="Ecke" data-text="Du bist vor dem Nachsitzen.">
+    <div class="field event"
+         style="grid-row: 1; grid-column: 4;"
+         data-title="Chaos am Buffet"
+         data-type="Ereignisfeld"
+         data-text="Die Schlange stockt, Tabletts klappern, Stimmen überlagern sich. Ziehe eine Ereignis-Karte.">
+      <div class="field-label">Ereignis</div>
+      <div class="field-name">Buffet-Chaos</div>
+    </div>
+
+    <div class="field group-orange"
+         style="grid-row: 1; grid-column: 3;"
+         data-title="Aula"
+         data-type="Ort"
+         data-text="Versammlungen, Reden, Auftritte – die Schule tritt als Bühne auf.">
+      <div class="field-label">Aula</div>
+      <div class="field-name">Aula</div>
+    </div>
+
+    <div class="field group-orange"
+         style="grid-row: 1; grid-column: 2;"
+         data-title="Eingangsbereich"
+         data-type="Ort"
+         data-text="Hier beginnt und endet jeder Tag – ein Tor ins Marianum.">
+      <div class="field-label">Eingang</div>
+      <div class="field-name">Schulhaus</div>
+    </div>
+
+    <div class="field corner special"
+         style="grid-row: 1; grid-column: 1;"
+         data-title="Nur zu Besuch"
+         data-type="Ecke"
+         data-text="Du bist vor dem Nachsitzen – fürs Erste nur zu Besuch.">
       NUR<br>ZU<br>BESUCH
     </div>
 
-    <!-- LINKE SEITE (Spalte 1) -->
-    <div class="field group-pink" style="grid-row:2;grid-column:1;"
-         data-title="Schlaftrakt" data-type="Ort" data-text="Nachts ist alles leiser.">
-      <div class="field-label">Zimmer</div><div class="field-name">Schlaftrakt</div>
+    <!-- LINKE SEITE (oben → unten), Spalte 1 -->
+    <div class="field group-pink"
+         style="grid-row: 2; grid-column: 1;"
+         data-title="Schlaftrakt"
+         data-type="Ort"
+         data-text="Nachts ist alles leiser – und trotzdem bleibt vieles unausgesprochen wach.">
+      <div class="field-label">Zimmer</div>
+      <div class="field-name">Schlaftrakt</div>
     </div>
 
-    <div class="field group-pink" style="grid-row:3;grid-column:1;"
-         data-title="Innenflur" data-type="Ort" data-text="Ein Übergang zwischen Zimmern.">
-      <div class="field-label">Gang</div><div class="field-name">Innenflur</div>
+    <div class="field group-pink"
+         style="grid-row: 3; grid-column: 1;"
+         data-title="Innenflur"
+         data-type="Ort"
+         data-text="Ein Übergang zwischen Zimmern – und Rollen.">
+      <div class="field-label">Gang</div>
+      <div class="field-name">Innenflur</div>
     </div>
 
-    <div class="field event" style="grid-row:4;grid-column:1;"
-         data-title="Offener Tag" data-type="Ereignisfeld" data-text="Ziehe eine Ereignis-Karte.">
-      <div class="field-label">Ereignis</div><div class="field-name">Offener Tag</div>
+    <div class="field event"
+         style="grid-row: 4; grid-column: 1;"
+         data-title="Tag der offenen Tür"
+         data-type="Ereignisfeld"
+         data-text="Eltern wandern herum, alles wirkt wie eine Bühne. Ziehe eine Ereignis-Karte.">
+      <div class="field-label">Ereignis</div>
+      <div class="field-name">Offener Tag</div>
     </div>
 
-    <div class="field group-pink" style="grid-row:5;grid-column:1;"
-         data-title="Süd-Hof" data-type="Ort" data-text="Ein geschützter Ort – aber nie privat.">
-      <div class="field-label">Hof</div><div class="field-name">Süd-Hof</div>
+    <div class="field group-pink"
+         style="grid-row: 5; grid-column: 1;"
+         data-title="Innenhof Süd"
+         data-type="Ort"
+         data-text="Ein kleiner, geschützter Ort – und doch nie wirklich privat.">
+      <div class="field-label">Hof</div>
+      <div class="field-name">Süd-Hof</div>
     </div>
 
-    <div class="field station" style="grid-row:6;grid-column:1;"
-         data-title="Bahnhof" data-type="Station" data-text="Züge und Lebenswege.">
-      <div class="field-label">Station</div><div class="field-name">Bahnhof</div>
+    <div class="field station"
+         style="grid-row: 6; grid-column: 1;"
+         data-title="Stadtbahnhof"
+         data-type="Station"
+         data-text="Nicht nur Züge, auch Lebensentwürfe fahren hier ab.">
+      <div class="field-label">Station</div>
+      <div class="field-name">Bahnhof</div>
     </div>
 
-    <div class="field dolinar" style="grid-row:7;grid-column:1;"
-         data-title="Klassenbuch" data-type="Dolinar-Feld" data-text="Ziehe eine Dolinar-Karte.">
-      <div class="field-label">Dolinar</div><div class="field-name">Klassenbuch</div>
+    <div class="field dolinar"
+         style="grid-row: 7; grid-column: 1;"
+         data-title="Klassenbuch-Eintrag"
+         data-type="Dolinar-Feld"
+         data-text="Dein Name als Drohung – wie ein leises Hintergrundrauschen. Ziehe eine Dolinar-Karte.">
+      <div class="field-label">Dolinar</div>
+      <div class="field-name">Klassenbuch</div>
     </div>
 
-    <div class="field group-darkblue" style="grid-row:8;grid-column:1;"
-         data-title="Informatik" data-type="Ort" data-text="Digitaler Blickwechsel.">
-      <div class="field-label">Raum</div><div class="field-name">Informatik</div>
+    <div class="field group-darkblue"
+         style="grid-row: 8; grid-column: 1;"
+         data-title="Informatikraum"
+         data-type="Ort"
+         data-text="Hier verschiebt sich der Blick von analog zu digital – und wieder zurück.">
+      <div class="field-label">Raum</div>
+      <div class="field-name">Informatik</div>
     </div>
 
-    <div class="field event" style="grid-row:9;grid-column:1;"
-         data-title="Regen" data-type="Ereignisfeld" data-text="Ziehe eine Ereignis-Karte.">
-      <div class="field-label">Ereignis</div><div class="field-name">Regen</div>
+    <div class="field event"
+         style="grid-row: 9; grid-column: 1;"
+         data-title="Regen über Wien"
+         data-type="Ereignisfeld"
+         data-text="Pläne werden rutschig, Wege verändern sich. Ziehe eine Ereignis-Karte.">
+      <div class="field-label">Ereignis</div>
+      <div class="field-name">Regen</div>
     </div>
 
-    <div class="field group-darkblue" style="grid-row:10;grid-column:1;"
-         data-title="Musiksaal" data-type="Ort" data-text="Ein Raum voller Klang.">
-      <div class="field-label">Musik</div><div class="field-name">Musiksaal</div>
+    <div class="field group-darkblue"
+         style="grid-row: 10; grid-column: 1;"
+         data-title="Musiksaal"
+         data-type="Ort"
+         data-text="Proben, Stimmen, ein eigener Rhythmus.">
+      <div class="field-label">Musik</div>
+      <div class="field-name">Musiksaal</div>
     </div>
 
   </div>
 
-  <!-- MODAL -->
+  <!-- MODAL für Feldinfos beim Klicken -->
   <div class="modal-backdrop" id="field-modal">
     <div class="modal">
       <div class="modal-type" id="modal-type"></div>
@@ -431,27 +697,30 @@
     © 2025 – Marianumopoly
   </footer>
 
+  <!-- Script: Field-Modal (klicken auf Felder) -->
   <script>
-    const modalBackdrop = document.getElementById('field-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalType = document.getElementById('modal-type');
-    const modalText = document.getElementById('modal-text');
-    const modalClose = document.getElementById('modal-close');
+    const fieldModalBackdrop = document.getElementById('field-modal');
+    const fieldModalTitle = document.getElementById('modal-title');
+    const fieldModalType = document.getElementById('modal-type');
+    const fieldModalText = document.getElementById('modal-text');
+    const fieldModalClose = document.getElementById('modal-close');
 
-    function openModal(title, type, text) {
-      modalTitle.textContent = title || '';
-      modalType.textContent = type || '';
-      modalText.textContent = text || '';
-      modalBackdrop.style.display = 'flex';
+    function openFieldModal(title, type, text) {
+      fieldModalTitle.textContent = title || '';
+      fieldModalType.textContent = type || '';
+      fieldModalText.textContent = text || '';
+      fieldModalBackdrop.style.display = 'flex';
     }
 
-    function closeModal() {
-      modalBackdrop.style.display = 'none';
+    function closeFieldModal() {
+      fieldModalBackdrop.style.display = 'none';
     }
 
     document.querySelectorAll('.field').forEach(field => {
-      field.addEventListener('click', () => {
-        openModal(
+      field.addEventListener('click', (e) => {
+        // Wenn HUD-Buttons geklickt werden, nicht das Feldmodal öffnen
+        if (e.target.tagName.toLowerCase() === 'button') return;
+        openFieldModal(
           field.getAttribute('data-title'),
           field.getAttribute('data-type'),
           field.getAttribute('data-text')
@@ -459,14 +728,17 @@
       });
     });
 
-    modalClose.addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click', e => {
-      if (e.target === modalBackdrop) closeModal();
+    fieldModalClose.addEventListener('click', closeFieldModal);
+    fieldModalBackdrop.addEventListener('click', e => {
+      if (e.target === fieldModalBackdrop) closeFieldModal();
     });
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') closeFieldModal();
     });
   </script>
+
+  <!-- Vollautomatische Spiel-Engine -->
+  <script src="engine.js"></script>
 
 </body>
 </html>
